@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/*---------------------font----------------------*/
+
+/* 📌 تعریف فونت‌فیس های دانا */
+@font-face {
+    font-family: "Dana-Light";
+    src: url("/fonts/dana/Dana-Light.woff2") format("woff2");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Dana-Medium";
+    src: url("/fonts/dana/Dana-Medium.woff2") format("woff2");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Dana-Bold";
+    src: url("/fonts/dana/Dana-Bold.woff2") format("woff2");
+    font-display: swap;
+}
+
+/* 📌 تعریف فونت‌فیس های مربع */
+@font-face {
+    font-family: "Morabba-Light";
+    src: url("/fonts/morabba/Morabba-Light.woff2") format("woff2");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Morabba-Medium";
+    src: url("/fonts/morabba/Morabba-Medium.woff2") format("woff2");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Morabba-Bold";
+    src: url("/fonts/morabba/Morabba-Bold.woff2") format("woff2");
+    font-display: swap;
+}
+
+/* 📌 اعمال فونت پیش‌فرض به کل پروژه */
+@layer base {
+    html {
+        font-family: "Dana-Light", sans-serif;
+    }
+}
+
+/* 📌 اضافه کردن کلاس‌های مخصوص فونت */
+@layer utilities {
+    .font-dana-light {
+        font-family: "Dana-Light", sans-serif;
+    }
+    .font-dana-medium {
+        font-family: "Dana-Medium", sans-serif;
+    }
+    .font-dana-bold {
+        font-family: "Dana-Bold", sans-serif;
+    }
+    .font-morabba-light {
+        font-family: "Morabba-Light", sans-serif;
+    }
+    .font-morabba-medium {
+        font-family: "Morabba-Medium", sans-serif;
+    }
+    .font-morabba-bold {
+        font-family: "Morabba-Bold", sans-serif;
+    }
+}
+
+/*---------------------color-----------------------*/
+
+/* 🏷️ استفاده از رنگ‌های سفارشی در کلاس‌های Tailwind */
+@layer utilities {
+    .text-brown-100 {@apply text-[#ECE0D1];}
+
+    .bg-wine-500 {@apply bg-[#891530];}
+
+}
+
+
+
+
+/*-------------------spinner-----------------------*/
+
+/* styles/spinner.css */
+@layer utilities {
+    .spinner-9 {
+        @apply aspect-square rounded-full;
+        width: var(--spinner-size, 50px);
+        background:
+                radial-gradient(farthest-side, var(--spinner-color, #f03355) 95%, #0000) 50% 1px/12px 12px no-repeat,
+                radial-gradient(farthest-side, #0000 calc(100% - 14px), #ccc 0);
+        animation: spin-9 var(--spinner-speed, 2s) infinite linear;
+    }
+}
+
+@keyframes spin-9 {
+    to {
+        transform: rotate(1turn);
+    }
+}
