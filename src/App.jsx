@@ -13,6 +13,8 @@ import Settings from "./pages/Settings.jsx";
 import Users from "./pages/Users.jsx";
 import Rooms from "./pages/Rooms.jsx";
 import Booking from "./pages/Booking.jsx";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createBrowserRouter([
   {
@@ -59,8 +61,21 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+    },
+  },
+});
+
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 };
 
 export default App;
