@@ -70,7 +70,6 @@
 /* 🏷️ استفاده از رنگ‌های سفارشی در کلاس‌های Tailwind */
 @layer utilities {
     .text-brown-100 {@apply text-[#ECE0D1];}
-
     .bg-wine-500 {@apply bg-[#891530];}
 
 }
@@ -78,22 +77,3 @@
 
 
 
-/*-------------------spinner-----------------------*/
-
-/* styles/spinner.css */
-@layer utilities {
-    .spinner-9 {
-        @apply aspect-square rounded-full;
-        width: var(--spinner-size, 50px);
-        background:
-                radial-gradient(farthest-side, var(--spinner-color, #f03355) 95%, #0000) 50% 1px/12px 12px no-repeat,
-                radial-gradient(farthest-side, #0000 calc(100% - 14px), #ccc 0);
-        animation: spin-9 var(--spinner-speed, 2s) infinite linear;
-    }
-}
-
-@keyframes spin-9 {
-    to {
-        transform: rotate(1turn);
-    }
-}

@@ -40,7 +40,7 @@ const RoomRow = ({ room, index }) => {
             <FiCopy size={18} />
           </button>
           <button
-            className="text-green-600 hover:text-green-800 transition-colors"
+            className="text-[#2c93a2] hover:text-green-800 transition-colors"
             title="ویرایش"
           >
             <FiEdit size={18} />

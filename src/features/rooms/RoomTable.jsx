@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RoomRow from "./RoomRow.jsx";
 import { useRooms } from "./useRooms.js";
 import IsLoading from "../../ui/IsLoading.jsx";
 import Error from "../../ui/Error.jsx";
+import RoomForm from "./RoomForm.jsx";
+import Modal from "react-modal";
 
 const RoomTable = () => {
   const { isLoading, error, rooms } = useRooms();
-  console.log("Rooms data:", rooms); // دیباگ داده‌ها
+  // console.log("Rooms data:", rooms); // دیباگ داده‌ها
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  // پیش‌بارگذاری تصویر
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/images/back3.jpg";
+  }, []);
 
   // مدیریت حالت لودینگ
   if (isLoading) {
@@ -19,8 +31,16 @@ const RoomTable = () => {
   }
 
   return (
-    <div className="p-4 sm:p-6 md:p-8">
-      <h1 className="text-2xl font-bold mb-4 text-gray-800">اتاق ها</h1>
+    <div className="p-4 sm:p-6 md:p-8 relative">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">اتاق‌ها</h1>
+        <button
+          onClick={openModal}
+          className="bg-gradient-to-r from-[#e74c3c] to-[#c0392b] text-white px-4 py-2 rounded-lg hover:from-[#f19a8e] hover:to-[#e57366] transition-all duration-200"
+        >
+          افزودن اتاق جدید
+        </button>
+      </div>
       {rooms.length === 0 ? (
         <p className="text-gray-600 text-center">No rooms available.</p>
       ) : (
@@ -28,22 +48,22 @@ const RoomTable = () => {
           <table className="min-w-full border-collapse border border-gray-200 shadow-md rounded-lg">
             <thead>
               <tr className="bg-gradient-to-r from-[#7fc1cf] to-[#2c93a2] text-white">
-                <th className="border border-gray-200 px-4 py-2 text-left text-sm font-semibold">
+                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
                   عکس
                 </th>
-                <th className="border border-gray-200 px-4 py-2 text-left text-sm font-semibold">
+                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
                   نام
                 </th>
-                <th className="border border-gray-200 px-4 py-2 text-left text-sm font-semibold">
+                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
                   ظرفیت
                 </th>
-                <th className="border border-gray-200 px-4 py-2 text-left text-sm font-semibold">
+                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
                   قیمت
                 </th>
-                <th className="border border-gray-200 px-4 py-2 text-left text-sm font-semibold">
+                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
                   تخفیف
                 </th>
-                <th className="border border-gray-200 px-4 py-2 text-left text-sm font-semibold">
+                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
                   #
                 </th>
               </tr>
@@ -56,6 +76,19 @@ const RoomTable = () => {
           </table>
         </div>
       )}
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        className="bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto z-50"
+        overlayClassName="absolute inset-0 bg-[url('/images/back3.jpg')] bg-cover bg-center flex justify-center items-center z-40"
+        parentSelector={() => document.querySelector("main")} // محدود کردن به <main>
+      >
+        <RoomForm />
+        <button onClick={closeModal} className="mt-4 text-red-600">
+          بستن
+        </button>
+      </Modal>
     </div>
   );
 };
