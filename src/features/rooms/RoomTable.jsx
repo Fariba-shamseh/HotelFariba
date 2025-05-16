@@ -82,6 +82,7 @@ const RoomTable = () => {
         onRequestClose={closeModal}
         className="w-full max-w-lg max-h-[90vh] overflow-y-auto mx-4 sm:mx-auto p-6 bg-white rounded-lg shadow-lg z-50"
         overlayClassName="absolute inset-0 bg-[url('/images/back3.jpg')] bg-cover bg-center flex justify-center items-center z-40"
+        ariaHideApp={false} // غیرفعال کردن aria-hidden
         parentSelector={() => document.querySelector("main")} // محدود کردن به <main>
       >
         <RoomForm />
