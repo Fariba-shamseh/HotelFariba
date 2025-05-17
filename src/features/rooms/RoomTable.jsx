@@ -3,7 +3,7 @@ import RoomRow from "./RoomRow.jsx";
 import { useRooms } from "./useRooms.js";
 import IsLoading from "../../ui/IsLoading.jsx";
 import Error from "../../ui/Error.jsx";
-import RoomForm from "./RoomForm.jsx";
+import CreateRoomForm from "./CreateRoomForm.jsx";
 import Modal from "react-modal";
 
 const RoomTable = () => {
@@ -85,7 +85,7 @@ const RoomTable = () => {
         ariaHideApp={false} // غیرفعال کردن aria-hidden
         parentSelector={() => document.querySelector("main")} // محدود کردن به <main>
       >
-        <RoomForm />
+        <CreateRoomForm />
         <button onClick={closeModal} className="mt-4 text-red-600">
           بستن
         </button>

@@ -1,15 +1,34 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { createRoom } from "../../services/apiRooms.js";
 
-const RoomForm = () => {
+const CreateRoomForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
+  const queryClient = useQueryClient();
+
+  const { isPending: isCreating, mutate } = useMutation({
+    mutationFn: createRoom,
+    onSuccess: () => {
+      toast.success("اتاق جدید با موفقیت اضافه شد");
+      queryClient.invalidateQueries({
+        queryKey: ["rooms"],
+      });
+      reset();
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
   const onSubmit = (data) => {
     console.log("Submitted data:", data);
+    mutate(data);
   };
 
   return (
@@ -159,6 +178,7 @@ const RoomForm = () => {
         <div className="text-center">
           <button
             type="submit"
+            disabled={isCreating}
             className="w-full bg-gradient-to-r from-[#7fc1cf] to-[#2c93a2] text-white p-3 rounded-lg hover:from-[#6ab1bf] hover:to-[#1c8392] transition-colors duration-200"
           >
             ثبت اتاق
@@ -169,4 +189,4 @@ const RoomForm = () => {
   );
 };
 
-export default RoomForm;
+export default CreateRoomForm;

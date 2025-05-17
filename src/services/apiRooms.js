@@ -9,3 +9,15 @@ export async function getRooms() {
 }
 
 //-------------------------------------------------------------------------------
+
+export async function createRoom(newRoom) {
+  const { data, error } = await supabase
+    .from("rooms")
+    .insert([newRoom])
+    .select();
+
+  if (error) {
+    throw new Error("ثبت اتاق‌ انجام نشد");
+  }
+  return data;
+}

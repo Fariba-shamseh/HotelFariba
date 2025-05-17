@@ -12,7 +12,7 @@ const AppLayout = () => {
     <div className="grid grid-rows-[auto_1fr_auto] h-screen md:grid-cols-[20rem_1fr] relative">
       <Header setOpen={setIsSidebarOpen} />
       <Sidebar isOpen={isSidebarOpen} setOpen={setIsSidebarOpen} />
-      <main className="pt-4 bg-gray-100 min-h-0 md:pt-20 md:pl-8 md:pb-10 relative">
+      <main className="overflow-auto pt-4 bg-gray-100 min-h-0 md:pt-20 md:pl-8 md:pb-10 relative">
         {/* لایه پس‌زمینه با تصویر */}
         <div
           className="absolute inset-0 z-0"
