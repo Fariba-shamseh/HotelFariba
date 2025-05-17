@@ -28,7 +28,19 @@ const CreateRoomForm = () => {
 
   const onSubmit = (data) => {
     console.log("Submitted data:", data);
-    mutate(data);
+    // mutate(data);
+    // آماده‌سازی داده‌ها قبل از ارسال
+    const preparedData = {
+      name: data.name,
+      maxCapacity: parseInt(data.maxCapacity), // تبدیل به عدد
+      regularPrice: parseInt(data.regularPrice), // تبدیل به عدد
+      discount: parseInt(data.discount), // تبدیل به عدد
+      description: data.description || "", // مدیریت مقدار خالی
+      image: data.image && data.image.length > 0 ? data.image[0] : null, // گرفتن اولین فایل
+    };
+
+    console.log("Prepared data:", preparedData);
+    mutate(preparedData);
   };
 
   return (
