@@ -6,7 +6,7 @@ export function useCreateRoom() {
   const queryClient = useQueryClient();
   // mutation1
   const { isPending: isCreating, mutate: createRoom } = useMutation({
-    mutationFn: ({ newRoomData }) => createEditRoom(newRoomData),
+    mutationFn: ({ newRoomData }) => createEditRoom(newRoomData, null),
     onSuccess: () => {
       toast.success("اتاق جدید با موفقیت اضافه شد");
       queryClient.invalidateQueries({

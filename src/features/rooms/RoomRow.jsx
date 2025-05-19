@@ -1,8 +1,27 @@
 import { format } from "../../ui/utils/helpers.js";
 import { FiCopy, FiEdit, FiTrash2 } from "react-icons/fi";
+import { useCreateRoom } from "./useCreateRoom.js";
+import { useDeleteRoom } from "./useDeleteRoom.js";
 
 const RoomRow = ({ room, index, openModal }) => {
-  const { image, name, maxCapacity, regularPrice, discount } = room;
+  const { id, image, name, regularPrice, discount, maxCapacity, description } =
+    room;
+  const { isCreating, createRoom } = useCreateRoom();
+  const { isDeleting, deleteRoom } = useDeleteRoom();
+
+  //Duplicate
+  function handleDuplicate() {
+    console.log("Duplicating :", room);
+
+    createRoom({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
 
   return (
     <tr
@@ -36,6 +55,8 @@ const RoomRow = ({ room, index, openModal }) => {
           <button
             className="text-blue-600 hover:text-blue-800 transition-colors"
             title="کپی"
+            onClick={handleDuplicate}
+            disabled={isCreating}
           >
             <FiCopy size={18} />
           </button>
@@ -49,6 +70,8 @@ const RoomRow = ({ room, index, openModal }) => {
           <button
             className="text-red-600 hover:text-red-800 transition-colors"
             title="حذف"
+            onClick={() => deleteRoom(id)}
+            disabled={isDeleting}
           >
             <FiTrash2 size={18} />
           </button>

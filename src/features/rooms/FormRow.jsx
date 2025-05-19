@@ -10,13 +10,14 @@ const FormRow = ({
   validation = {},
   register,
   error,
+  labelClassName = "",
   ...rest
 }) => {
   return (
     <div>
       <label
         htmlFor={name}
-        className="block text-sm font-medium text-gray-700 mb-1"
+        className={`${labelClassName}block text-sm font-medium text-gray-700 mb-1`}
       >
         {label}
       </label>

@@ -10,15 +10,24 @@ export async function getRooms() {
 
 //-------------------------------------------------------------------------------
 
-// export async function createRoom(newRoom) {
+export async function deleteRoom(id) {
+  const { error } = await supabase.from("rooms").delete().eq("id", id);
+  if (error) {
+    throw new Error("حذف اتاق‌ها انجام نشد");
+  }
+}
+
+//-------------------------------------------------------------------------------
+
+// export async function createRoom(newRoomData) {
 //   try {
 //     // 1. ایجاد اتاق با مسیر موقت تصویر
-//     const fileExt = newRoom.image.name.split(".").pop();
+//     const fileExt = newRoomData.image.name.split(".").pop();
 //     const filePath = `${Date.now()}-${Math.floor(Math.random() * 1000)}.${fileExt}`; // حذف fileName
 //
 //     const { data, error } = await supabase
 //       .from("rooms")
-//       .insert([{ ...newRoom, image: filePath }])
+//       .insert([{ ...newRoomData, image: filePath }])
 //       .select()
 //       .single();
 //
@@ -34,7 +43,7 @@ export async function getRooms() {
 //     // 2. آپلود تصویر
 //     const { error: storageError } = await supabase.storage
 //       .from("rooms")
-//       .upload(filePath, newRoom.image);
+//       .upload(filePath, newRoomData.image);
 //
 //     if (storageError) {
 //       await supabase.from("rooms").delete().eq("id", data.id);
@@ -65,54 +74,119 @@ export async function getRooms() {
 
 //-------------------------------------------------------------------------------
 
-export async function createEditRoom(newRoom, id) {
-  let imageUrl = newRoom.image;
+// export async function createEditRoom(newRoomData, id) {
+//   let imageUrl = newRoomData.image || null;
+//
+//   // Check if a new image file has been uploaded
+//   const isFileObject = newRoomData.image instanceof File;
+//
+//   if (isFileObject) {
+//     // Generate a unique image name
+//     const fileName = newRoomData.image.name.split("/").pop();
+//     const imageName = `${Math.random()}-${fileName}`.replaceAll("/", "");
+//
+//     // Upload image to Supabase storage
+//     const { error: uploadError } = await supabase.storage
+//       .from("rooms")
+//       .upload(imageName, newRoomData.image);
+//
+//     if (uploadError) {
+//       console.error(uploadError);
+//       throw new Error("آپلود عکس با خطا مواجه شد");
+//     }
+//
+//     // Retrieve the public URL of the uploaded image
+//     const {
+//       data: { publicUrl },
+//       error: urlError,
+//     } = await supabase.storage.from("rooms").getPublicUrl(imageName);
+//
+//     if (urlError) {
+//       throw new Error("دریافت URL شکست خورد: " + urlError.message);
+//     }
+//
+//     imageUrl = publicUrl;
+//   }
+//
+//   // Prepare the final room data with the image URL
+//   const roomData = { ...newRoomData, image: imageUrl };
+//
+//   let query = supabase.from("rooms");
+//   let dbResponse;
+//
+//   // Insert a new room if no ID is provided, otherwise update existing room
+//   if (!id) {
+//     dbResponse = await query.insert([roomData]).select().single();
+//   } else {
+//     dbResponse = await query.update(roomData).eq("id", id).select().single();
+//   }
+//
+//   const { data, error } = dbResponse;
+//
+//   if (error) {
+//     console.error(error);
+//     throw new Error(
+//       id ? "ویرایش اتاق ناموفق بود" : "افزودن اتاق با خطا مواجه شد",
+//     );
+//   }
+//
+//   return data;
+// }
 
-  // Check if a new image file has been uploaded
-  const isFileObject = newRoom.image instanceof File;
+export async function createEditRoom(newRoomData, id) {
+  const hasImageFile = newRoomData.image instanceof File;
 
-  if (isFileObject) {
-    // Generate a unique image name
-    const fileName = newRoom.image.name.split("/").pop();
-    const imageName = `${Math.random()}-${fileName}`.replaceAll("/", "");
+  // A) Prepare roomData without changing image yet
+  const roomData = { ...newRoomData };
 
-    // Upload image to Supabase storage
-    const { error: uploadError } = await supabase.storage
-      .from("rooms")
-      .upload(imageName, newRoom.image);
+  // B) Update room without uploading image if there's no new image file
+  if (!hasImageFile) {
+    const query = id
+      ? supabase.from("rooms").update(roomData).eq("id", id)
+      : supabase.from("rooms").insert([roomData]);
 
-    if (uploadError) {
-      console.error(uploadError);
-      throw new Error("آپلود عکس با خطا مواجه شد");
+    const { data, error } = await query.select().single();
+
+    if (error) {
+      console.error(error);
+      throw new Error(
+        id ? "ویرایش اتاق ناموفق بود" : "افزودن اتاق با خطا مواجه شد",
+      );
     }
 
-    // Retrieve the public URL of the uploaded image
-    const {
-      data: { publicUrl },
-      error: urlError,
-    } = await supabase.storage.from("rooms").getPublicUrl(imageName);
-
-    if (urlError) {
-      throw new Error("دریافت URL شکست خورد: " + urlError.message);
-    }
-
-    imageUrl = publicUrl;
+    return data; // ✅ CUT EARLY like Jonas
   }
 
-  // Prepare the final room data with the image URL
-  const roomData = { ...newRoom, image: imageUrl };
+  // C) Otherwise, upload image
+  const fileName = newRoomData.image.name.split("/").pop();
+  const imageName = `${Math.random()}-${fileName}`.replaceAll("/", "");
 
-  let query = supabase.from("rooms");
-  let dbResponse;
+  const { error: uploadError } = await supabase.storage
+    .from("rooms")
+    .upload(imageName, newRoomData.image);
 
-  // Insert a new room if no ID is provided, otherwise update existing room
-  if (!id) {
-    dbResponse = await query.insert([roomData]).select().single();
-  } else {
-    dbResponse = await query.update(roomData).eq("id", id).select().single();
+  if (uploadError) {
+    console.error(uploadError);
+    throw new Error("آپلود عکس با خطا مواجه شد");
   }
 
-  const { data, error } = dbResponse;
+  // D) Get public URL
+  const {
+    data: { publicUrl },
+    error: urlError,
+  } = await supabase.storage.from("rooms").getPublicUrl(imageName);
+
+  if (urlError) {
+    throw new Error("دریافت URL شکست خورد: " + urlError.message);
+  }
+
+  // E) Final insert/update with image URL
+  const updatedRoomData = { ...roomData, image: publicUrl };
+  const query = id
+    ? supabase.from("rooms").update(updatedRoomData).eq("id", id)
+    : supabase.from("rooms").insert([updatedRoomData]);
+
+  const { data, error } = await query.select().single();
 
   if (error) {
     console.error(error);
@@ -123,3 +197,5 @@ export async function createEditRoom(newRoom, id) {
 
   return data;
 }
+
+//-------------------------------------------------------------------------------
