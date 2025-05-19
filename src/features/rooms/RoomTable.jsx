@@ -11,7 +11,12 @@ const RoomTable = () => {
   // console.log("Rooms data:", rooms); // دیباگ داده‌ها
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
+  const [selectedRoom, setSelectedRoom] = useState(null); // برای مدیریت اتاق انتخاب‌شده
+
+  const openModal = (room = null) => {
+    setSelectedRoom(room);
+    setIsModalOpen(true);
+  };
   const closeModal = () => setIsModalOpen(false);
 
   // پیش‌بارگذاری تصویر
@@ -70,7 +75,12 @@ const RoomTable = () => {
             </thead>
             <tbody>
               {rooms.map((room, index) => (
-                <RoomRow key={room.id} room={room} index={index} />
+                <RoomRow
+                  key={room.id}
+                  room={room}
+                  index={index}
+                  openModal={(r) => openModal(r)}
+                />
               ))}
             </tbody>
           </table>
@@ -85,7 +95,7 @@ const RoomTable = () => {
         ariaHideApp={false} // غیرفعال کردن aria-hidden
         parentSelector={() => document.querySelector("main")} // محدود کردن به <main>
       >
-        <CreateRoomForm />
+        <CreateRoomForm roomToEdit={selectedRoom} />
         <button onClick={closeModal} className="mt-4 text-red-600">
           بستن
         </button>

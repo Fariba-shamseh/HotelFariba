@@ -1,9 +1,9 @@
-import React from "react";
 import { format } from "../../ui/utils/helpers.js";
 import { FiCopy, FiEdit, FiTrash2 } from "react-icons/fi";
 
-const RoomRow = ({ room, index }) => {
+const RoomRow = ({ room, index, openModal }) => {
   const { image, name, maxCapacity, regularPrice, discount } = room;
+
   return (
     <tr
       className={`${
@@ -42,6 +42,7 @@ const RoomRow = ({ room, index }) => {
           <button
             className="text-[#2c93a2] hover:text-green-800 transition-colors"
             title="ویرایش"
+            onClick={() => openModal(room)}
           >
             <FiEdit size={18} />
           </button>

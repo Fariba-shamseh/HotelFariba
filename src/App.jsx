@@ -15,6 +15,7 @@ import Rooms from "./pages/Rooms.jsx";
 import Booking from "./pages/Booking.jsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,21 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <RouterProvider router={router} />
+      <Toaster
+        position="top-center"
+        gutter={12}
+        className="m-2"
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 5000,
+          },
+          className:
+            "text-base max-w-[500px] p-4 px-6 bg-gray-50 text-gray-700",
+        }}
+      />
     </QueryClientProvider>
   );
 };
