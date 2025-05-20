@@ -5,9 +5,8 @@ import IsLoading from "../../ui/IsLoading.jsx";
 import Error from "../../ui/Error.jsx";
 import CreateRoomForm from "./CreateRoomForm.jsx";
 import Modal from "react-modal";
-import Filter from "../../ui/Filter.jsx";
 import { useSearchParams } from "react-router-dom";
-import Rooms from "../../pages/Rooms.jsx";
+import RoomTableOpration from "./RoomTableOpration.jsx";
 
 const RoomTable = () => {
   const { isLoading, error, rooms } = useRooms();
@@ -35,7 +34,7 @@ const RoomTable = () => {
     return <Error message={error.message} />;
   }
 
-  //filter
+  //filter(RoomTableOpration)
   const filterValue = searchParams.get("discount") || "all";
   console.log("Filter value:", filterValue);
   const filterRooms =
@@ -50,8 +49,8 @@ const RoomTable = () => {
   return (
     <div className="p-4 sm:p-6 md:p-8 relative">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">اتاق‌ها</h1>{" "}
-        <Filter />{" "}
+        <h1 className="text-2xl font-bold text-gray-800">اتاق‌ها</h1>
+        <RoomTableOpration />
       </div>
       {rooms.length === 0 ? (
         <p className="text-gray-600 text-center">No rooms available.</p>
