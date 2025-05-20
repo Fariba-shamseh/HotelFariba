@@ -5,10 +5,13 @@ import IsLoading from "../../ui/IsLoading.jsx";
 import Error from "../../ui/Error.jsx";
 import CreateRoomForm from "./CreateRoomForm.jsx";
 import Modal from "react-modal";
+import Filter from "../../ui/Filter.jsx";
+import { useSearchParams } from "react-router-dom";
+import Rooms from "../../pages/Rooms.jsx";
 
 const RoomTable = () => {
   const { isLoading, error, rooms } = useRooms();
-  // console.log("Rooms data:", rooms); // دیباگ داده‌ها
+  const [searchParams] = useSearchParams();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(null); // برای مدیریت اتاق انتخاب‌شده
@@ -19,32 +22,36 @@ const RoomTable = () => {
   };
   const closeModal = () => setIsModalOpen(false);
 
-  // پیش‌بارگذاری تصویر
   useEffect(() => {
     const img = new Image();
     img.src = "/images/back3.jpg";
   }, []);
 
-  // مدیریت حالت لودینگ
   if (isLoading) {
     return <IsLoading />;
   }
 
-  // مدیریت حالت خطا
   if (error) {
     return <Error message={error.message} />;
   }
 
+  //filter
+  const filterValue = searchParams.get("discount") || "all";
+  console.log("Filter value:", filterValue);
+  const filterRooms =
+    filterValue === "all"
+      ? rooms
+      : filterValue === "no-discount"
+        ? rooms.filter((room) => room.discount === 0)
+        : filterValue === "with-discount"
+          ? rooms.filter((room) => room.discount > 0)
+          : rooms; // مقدار پیش‌فرض اگه فیلتر نامعتبر باشه
+
   return (
     <div className="p-4 sm:p-6 md:p-8 relative">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">اتاق‌ها</h1>
-        <button
-          onClick={openModal}
-          className="bg-gradient-to-r from-[#e74c3c] to-[#c0392b] text-white px-4 py-2 rounded-lg hover:from-[#f19a8e] hover:to-[#e57366] transition-all duration-200"
-        >
-          افزودن اتاق جدید
-        </button>
+        <h1 className="text-2xl font-bold text-gray-800">اتاق‌ها</h1>{" "}
+        <Filter />{" "}
       </div>
       {rooms.length === 0 ? (
         <p className="text-gray-600 text-center">No rooms available.</p>
@@ -74,7 +81,7 @@ const RoomTable = () => {
               </tr>
             </thead>
             <tbody>
-              {rooms.map((room, index) => (
+              {filterRooms.map((room, index) => (
                 <RoomRow
                   key={room.id}
                   room={room}
@@ -100,6 +107,12 @@ const RoomTable = () => {
           بستن
         </button>
       </Modal>
+      <button
+        onClick={openModal}
+        className="bg-gradient-to-r from-[#e74c3c] to-[#c0392b] text-white px-4 py-2 rounded-lg mt-4 hover:from-[#f19a8e] hover:to-[#e57366] transition-all duration-200"
+      >
+        افزودن اتاق جدید
+      </button>
     </div>
   );
 };

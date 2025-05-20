@@ -116,7 +116,7 @@ const CreateRoomForm = ({ roomToEdit = {} }) => {
           disabled={isWorking}
           validation={{
             required: "تخفیف الزامی است",
-            min: { value: 0, message: "قیمت نمی‌تواند منفی باشد" },
+            min: { value: 0, message: "تخفیف نمی‌تواند منفی باشد" },
           }}
           error={errors.discount?.message}
         />
@@ -131,7 +131,7 @@ const CreateRoomForm = ({ roomToEdit = {} }) => {
           placeholder="توضیحات اتاق را وارد کنید..."
           disabled={isWorking}
           rows="4"
-          error={errors.discount?.message}
+          error={errors.description?.message}
         />
 
         {/* تصویر */}
