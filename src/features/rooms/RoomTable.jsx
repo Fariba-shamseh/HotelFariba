@@ -46,6 +46,19 @@ const RoomTable = () => {
           ? rooms.filter((room) => room.discount > 0)
           : rooms; // مقدار پیش‌فرض اگه فیلتر نامعتبر باشه
 
+  //sort(RoomTableOpration)
+  const sortValue = searchParams.get("sort") || "name-asc";
+  const [field, direction] = sortValue.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+  const sortedRooms = [...filterRooms].sort((a, b) => {
+    // برای name (رشته)
+    if (field === "name") {
+      return a[field].localeCompare(b[field]) * modifier;
+    }
+    // برای regularPrice و maxCapacity (عدد)
+    return (a[field] - b[field]) * modifier;
+  });
+
   return (
     <div className="p-4 sm:p-6 md:p-8 relative">
       <div className="flex justify-between items-center mb-6">
@@ -80,7 +93,8 @@ const RoomTable = () => {
               </tr>
             </thead>
             <tbody>
-              {filterRooms.map((room, index) => (
+              {/*{filterRooms.map((room, index) => (*/}
+              {sortedRooms.map((room, index) => (
                 <RoomRow
                   key={room.id}
                   room={room}
