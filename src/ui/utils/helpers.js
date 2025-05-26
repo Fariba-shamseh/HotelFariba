@@ -1,40 +1,32 @@
 import { formatDistance, parseISO, differenceInDays } from "date-fns";
+import { faIR } from "date-fns/locale";
 
-/**
- * فرمت‌دهنده‌های تاریخ و مبلغ
- */
 export const format = {
-  /**
-   * محاسبه تفاوت روز بین دو تاریخ
-   * @param {string|Date} dateStr1 - تاریخ اول
-   * @param {string|Date} dateStr2 - تاریخ دوم
-   * @returns {number} تعداد روزهای تفاوت
-   */
+  // تابع تفریق تاریخ‌ها
   subtractDates: (dateStr1, dateStr2) =>
     differenceInDays(parseISO(String(dateStr1)), parseISO(String(dateStr2))),
 
-  /**
-   * نمایش فاصله زمانی از حالا به صورت متن خوانا
-   * @param {string|Date} dateStr - تاریخ
-   * @returns {string} متن مانند "2 days ago"
-   */
-  formatDistanceFromNow: (dateStr) =>
-    formatDistance(parseISO(dateStr), new Date(), {
+  // تابع نمایش فاصله زمانی به فارسی
+  formatDistanceFromNow: (dateStr) => {
+    const distance = formatDistance(parseISO(dateStr), new Date(), {
       addSuffix: true,
-    })
-      .replace("about ", "")
-      .replace("in", "In"),
+      locale: faIR,
+    });
 
-  /**
-   * دریافت تاریخ امروز با امکان تنظیم به ابتدا یا انتهای روز
-   * @param {Object} options - تنظیمات
-   * @param {boolean} [options.end] - اگر true باشد، به انتهای روز تنظیم می‌شود
-   * @returns {string} تاریخ به فرمت ISO
-   */
+    return (
+      distance
+        .replace("about ", "")
+        .replace("کمتر از یک دقیقه پیش", "همین الان")
+        // جایگزینی دقیق با Regex برای جلوگیری از خطا
+        .replace(/(در) (\d+) (روز|هفته|ماه|سال|ساعت|دقیقه)/g, "$1 $2 $3 آینده")
+        .replace(/پیش/g, "گذشته")
+    );
+  },
+
+  // تابع دریافت تاریخ امروز
   getToday: (options = {}) => {
     const today = new Date();
     if (options?.end) {
-      // تنظیم به آخرین ثانیه روز
       today.setUTCHours(23, 59, 59, 999);
     } else {
       today.setUTCHours(0, 0, 0, 0);
@@ -42,26 +34,20 @@ export const format = {
     return today.toISOString();
   },
 
-  /**
-   * فرمت‌دهی مبلغ به صورت ارز
-   * @param {number} value - مقدار عددی
-   * @returns {string} مبلغ فرمت شده مانند "$100.00"
-   */
-  formatCurrency: (value) =>
-    new Intl.NumberFormat("en", {
-      style: "currency",
-      currency: "USD",
-    }).format(value),
+  // توابع فرمت‌دهی تاریخ
+  isToday: (date) => {
+    const today = new Date();
+    const targetDate = new Date(date);
+    return (
+      targetDate.getDate() === today.getDate() &&
+      targetDate.getMonth() === today.getMonth() &&
+      targetDate.getFullYear() === today.getFullYear()
+    );
+  },
 
-  formatCurrencyRial: (value) =>
-    new Intl.NumberFormat("fa-IR", {
-      style: "currency",
-      currency: "IRR",
-      maximumFractionDigits: 0,
-    }).format(value),
-
+  // تابع تبدیل ارز به تومان
   formatCurrencyToman: (value) => {
-    const tomanValue = value / 10;
+    const tomanValue = value / 10; // تبدیل ریال به تومان
     return (
       new Intl.NumberFormat("fa-IR", {
         style: "decimal",

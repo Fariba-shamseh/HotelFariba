@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import RoomRow from "./RoomRow.jsx";
 import { useRooms } from "./useRooms.js";
-import IsLoading from "../../ui/IsLoading.jsx";
+import Spinner from "../../ui/Spinner.jsx";
 import Error from "../../ui/Error.jsx";
 import CreateRoomForm from "./CreateRoomForm.jsx";
 import Modal from "react-modal";
 import { useSearchParams } from "react-router-dom";
 import RoomTableOpration from "./RoomTableOpration.jsx";
+import Empty from "../../ui/Empty.jsx";
 
 const RoomTable = () => {
   const { isLoading, error, rooms } = useRooms();
@@ -27,12 +28,14 @@ const RoomTable = () => {
   }, []);
 
   if (isLoading) {
-    return <IsLoading />;
+    return <Spinner />;
   }
 
   if (error) {
     return <Error message={error.message} />;
   }
+
+  if (!rooms.length) return <Empty resourceName="اتاقی" />;
 
   //filter(RoomTableOpration)
   const filterValue = searchParams.get("discount") || "all";
@@ -61,51 +64,47 @@ const RoomTable = () => {
 
   return (
     <div className="p-4 sm:p-6 md:p-8 relative">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">اتاق‌ها</h1>
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">اتاق‌ها</h1>
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6 ">
         <RoomTableOpration />
       </div>
-      {rooms.length === 0 ? (
-        <p className="text-gray-600 text-center">No rooms available.</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse border border-gray-200 shadow-md rounded-lg">
-            <thead>
-              <tr className="bg-gradient-to-r from-[#7fc1cf] to-[#2c93a2] text-white">
-                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
-                  عکس
-                </th>
-                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
-                  نام
-                </th>
-                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
-                  ظرفیت
-                </th>
-                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
-                  قیمت
-                </th>
-                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
-                  تخفیف
-                </th>
-                <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
-                  #
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {/*{filterRooms.map((room, index) => (*/}
-              {sortedRooms.map((room, index) => (
-                <RoomRow
-                  key={room.id}
-                  room={room}
-                  index={index}
-                  openModal={(r) => openModal(r)}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse border border-gray-200 shadow-md rounded-lg">
+          <thead>
+            <tr className="bg-gradient-to-r from-[#7fc1cf] to-[#2c93a2] text-white">
+              <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
+                عکس
+              </th>
+              <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
+                نام
+              </th>
+              <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
+                ظرفیت
+              </th>
+              <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
+                قیمت
+              </th>
+              <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
+                تخفیف
+              </th>
+              <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
+                #
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {/*{filterRooms.map((room, index) => (*/}
+            {sortedRooms.map((room, index) => (
+              <RoomRow
+                key={room.id}
+                room={room}
+                index={index}
+                openModal={(r) => openModal(r)}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <Modal
         isOpen={isModalOpen}
@@ -120,9 +119,10 @@ const RoomTable = () => {
           بستن
         </button>
       </Modal>
+
       <button
         onClick={openModal}
-        className="bg-gradient-to-r from-[#e74c3c] to-[#c0392b] text-white px-4 py-2 rounded-lg mt-4 hover:from-[#f19a8e] hover:to-[#e57366] transition-all duration-200"
+        className="bg-gradient-to-r from-[#e74c3c] to-[#c0392b] text-white px-4 py-2 mt-6 rounded-lg hover:from-[#f19a8e] hover:to-[#e57366] transition-all duration-200"
       >
         افزودن اتاق جدید
       </button>

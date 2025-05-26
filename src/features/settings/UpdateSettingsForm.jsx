@@ -3,7 +3,7 @@ import { useSettings } from "./useSettings.js";
 import { useForm } from "react-hook-form";
 import { useUpdateSetting } from "./useUpdateSetting.js";
 import FormRow from "../rooms/FormRow.jsx";
-import IsLoading from "../../ui/IsLoading.jsx";
+import Spinner from "../../ui/Spinner.jsx";
 
 const UpdateSettingsForm = () => {
   const {
@@ -30,7 +30,7 @@ const UpdateSettingsForm = () => {
 
   const { isUpdating, updateSetting } = useUpdateSetting();
 
-  if (isLoading) return <IsLoading />;
+  if (isLoading) return <Spinner />;
 
   function handleUpdate(e, field) {
     const { value } = e.target; // === e.target.value

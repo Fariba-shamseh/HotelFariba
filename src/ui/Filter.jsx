@@ -39,12 +39,15 @@ const Filter = ({ filterField, options }) => {
         <button
           key={option.value}
           onClick={() => handleClick(option.value)}
-          className={clsx("px-4 py-2 rounded-lg transition-all duration-200", {
-            "bg-gradient-to-r from-[#e74c3c] to-[#c0392b] text-white":
-              currentFilter === option.value, // حالت فعال: قرمز
-            "border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-100":
-              currentFilter !== option.value, // حالت غیرفعال: بوردری با متن خاکستری
-          })}
+          className={clsx(
+            "rounded-lg transition-all duration-200 text-xs sm:text-sm md:text-sm lg:text-base px-2 sm:px-3 md:px-3 lg:px-4 py-1 sm:py-1 md:py-1 lg:py-1.5",
+            {
+              "bg-gradient-to-r from-[#e74c3c] to-[#c0392b] text-white":
+                currentFilter === option.value, // حالت فعال: قرمز
+              "border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-100":
+                currentFilter !== option.value, // حالت غیرفعال: بوردری با متن خاکستری
+            },
+          )}
         >
           {option.label}
         </button>

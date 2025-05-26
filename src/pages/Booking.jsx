@@ -1,9 +1,10 @@
 import React from "react";
+import BookingTable from "../features/bookings/BookingTable.jsx";
 
 const Booking = () => {
   return (
     <div>
-      <h1>Booking</h1>
+      <BookingTable />
     </div>
   );
 };

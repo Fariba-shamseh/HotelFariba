@@ -1,6 +1,6 @@
 import React from "react";
 import Filter from "../../ui/Filter.jsx";
-import SortBy from "../../ui/SortBy.jsx";
+import Sort from "../../ui/Sort.jsx";
 
 const RoomTableOpration = () => {
   return (
@@ -13,27 +13,27 @@ const RoomTableOpration = () => {
           { value: "with-discount", label: "با تخفیف" },
         ]}
       />
-      <div className="p-4">
-        <SortBy
+      <div className="p-4 pl-0">
+        <Sort
           sortField="sort"
           options={[
-            { value: "name-asc", label: "مرتب‌سازی بر اساس نام (الف-ی)" },
-            { value: "name-desc", label: "مرتب‌سازی بر اساس نام (ی-الف)" },
+            { value: "name-asc", label: "مرتب‌سازی بر اساس نام (ک)" },
+            { value: "name-desc", label: "مرتب‌سازی بر اساس نام (ب)" },
             {
               value: "regularPrice-asc",
-              label: "مرتب‌سازی بر اساس قیمت (پایین به بالا)",
+              label: "مرتب‌سازی بر اساس قیمت (ک)",
             },
             {
               value: "regularPrice-desc",
-              label: "مرتب‌سازی بر اساس قیمت (بالا به پایین)",
+              label: "مرتب‌سازی بر اساس قیمت (ب)",
             },
             {
               value: "maxCapacity-asc",
-              label: "مرتب‌سازی بر اساس ظرفیت (پایین به بالا)",
+              label: "مرتب‌سازی بر اساس ظرفیت (ک)",
             },
             {
               value: "maxCapacity-desc",
-              label: "مرتب‌سازی بر اساس ظرفیت (بالا به پایین)",
+              label: "مرتب‌سازی بر اساس ظرفیت (ب)",
             },
           ]}
         />
