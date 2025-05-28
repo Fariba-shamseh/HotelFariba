@@ -14,6 +14,21 @@ const BookingTableOpration = () => {
           { value: "checked_out", label: "تسویه کرده" },
         ]}
       />
+      {/*<Sort*/}
+      {/*  sortField="sort"*/}
+      {/*  options={[*/}
+      {/*    { value: "startDate-desc", label: "مرتب‌سازی بر اساس تاریخ (ک)" },*/}
+      {/*    { value: "startDate-asc", label: "مرتب‌سازی بر اساس تاریخ  (ب)" },*/}
+      {/*    {*/}
+      {/*      value: "totalPrice-desc",*/}
+      {/*      label: "مرتب‌سازی بر اساس مبلغ کل (ک)",*/}
+      {/*    },*/}
+      {/*    {*/}
+      {/*      value: "totalPrice-asc",*/}
+      {/*      label: "مرتب‌سازی بر اساس مبلغ کل (ک)",*/}
+      {/*    },*/}
+      {/*  ]}*/}
+      {/*/>*/}
     </>
   );
 };

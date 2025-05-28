@@ -1,10 +1,11 @@
 import React from "react";
+import LoginForm from "../features/authentication/LoginForm.jsx";
 
 const Login = () => {
   return (
-    <div>
-      <h1>Login</h1>
-    </div>
+    <>
+      <LoginForm />
+    </>
   );
 };
 
