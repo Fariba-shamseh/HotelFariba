@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../ui/Logo.jsx";
-import SpinnerLogin from "../../ui/SppinerLogin.jsx";
+import SpinnerLogin from "../../ui/SpinnerMini.jsx";
 import { useLogin } from "./useLogin.js";
 
 const LoginForm = () => {

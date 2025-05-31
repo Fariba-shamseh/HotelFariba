@@ -1,5 +1,7 @@
 import React from "react";
 import { HiMenu } from "react-icons/hi";
+import { FiLogOut } from "react-icons/fi";
+import Logout from "./Logout.jsx";
 
 const Header = ({ setOpen }) => {
   return (
@@ -10,7 +12,9 @@ const Header = ({ setOpen }) => {
       >
         <HiMenu />
       </button>
-      HeaderS
+      <div className="mr-auto">
+        <Logout />
+      </div>
     </header>
   );
 };
