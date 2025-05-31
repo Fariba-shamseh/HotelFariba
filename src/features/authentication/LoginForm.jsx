@@ -7,11 +7,19 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin();
-
+  console.log("isLoading:", isLoading);
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
-    login({ email, password });
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      },
+    );
   }
 
   return (
@@ -65,16 +73,6 @@ const LoginForm = () => {
               disabled={isLoading}
             />
           </div>
-
-          {/* لینک فراموشی رمز عبور */}
-          {/*<div className="text-right">*/}
-          {/*  <a*/}
-          {/*    href="#"*/}
-          {/*    className="text-xs sm:text-sm text-blue-600 hover:text-blue-800 hover:underline"*/}
-          {/*  >*/}
-          {/*    رمز عبور خود را فراموش کرده‌اید؟*/}
-          {/*  </a>*/}
-          {/*</div>*/}
 
           {/* دکمه ورود */}
           <button

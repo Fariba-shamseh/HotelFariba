@@ -16,11 +16,16 @@ import Booking from "./pages/Booking.jsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
+import ProtectedRoute from "./ui/ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/", // والد تمام مسیرها
-    element: <AppLayout />,
+    element: (
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true, //روت اصلی (/)
