@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import Logo from "../../ui/Logo.jsx";
-import { login } from "../../services/apiAuth.js";
+import SpinnerLogin from "../../ui/SppinerLogin.jsx";
+import { useLogin } from "./useLogin.js";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
     login({ email, password });
   }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 md:px-8">
       <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-lg shadow-lg">
@@ -39,6 +42,7 @@ const LoginForm = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={isLoading}
             />
           </div>
 
@@ -58,6 +62,7 @@ const LoginForm = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              disabled={isLoading}
             />
           </div>
 
@@ -75,8 +80,9 @@ const LoginForm = () => {
           <button
             type="submit"
             className="w-full py-2 sm:py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm sm:text-base"
+            disabled={isLoading}
           >
-            ورود
+            {!isLoading ? "ورود" : <SpinnerLogin />}
           </button>
         </form>
       </div>
