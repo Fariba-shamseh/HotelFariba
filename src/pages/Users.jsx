@@ -1,11 +1,8 @@
 import React from "react";
+import SignupForm from "../features/authentication/SignupForm.jsx";
 
 const Users = () => {
-  return (
-    <div>
-      <h1>Users</h1>
-    </div>
-  );
+  return <SignupForm />;
 };
 
 export default Users;

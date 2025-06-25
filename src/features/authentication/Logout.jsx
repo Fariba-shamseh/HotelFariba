@@ -1,7 +1,7 @@
 import React from "react";
 import { FiLogOut } from "react-icons/fi";
-import { useLogout } from "../features/authentication/useLogout.js";
-import SppinerMini from "./SpinnerMini.jsx";
+import { useLogout } from "./useLogout.js";
+import SppinerMini from "../../ui/SpinnerMini.jsx";
 
 const Logout = () => {
   const { isLoading, logout } = useLogout();
