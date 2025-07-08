@@ -42,11 +42,14 @@ export async function logout() {
 export async function updateCurrentUser({ password, fullName, avatar }) {
   // 1. Update password OR fullName
 
-  let updateData;
-  if (password) updateData = { password };
-  if (fullName) updateData = { data: { fullName } };
+  let updateData = {};
+  // اگر پسورد وجود داره، به updateData اضافه کن
+  if (password) updateData.password = password;
+  // اگر fullName وجود داره، به data در updateData اضافه کن
+  if (fullName) updateData.data = { ...updateData.data, fullName };
 
-  const { data, error } = await supabase.auth.updateUser({ updateData });
+  console.log("updateData:", updateData);
+  const { data, error } = await supabase.auth.updateUser(updateData);
 
   if (error) throw new Error(error.message);
   if (!avatar) return data;

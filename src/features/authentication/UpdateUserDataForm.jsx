@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "./UseUser.js";
 import { useUpdateUser } from "./useUpdateUser.js";
 
@@ -16,9 +16,11 @@ const UpdateUserDataForm = () => {
   const [avatar, setAvatar] = useState(null);
   console.log("currentFullName:", currentFullName);
   console.log("isUpdating:", isUpdating);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!fullName) return;
+    console.log("Submitting:", { fullName, avatar });
     updateUser({ fullName, avatar });
   };
 

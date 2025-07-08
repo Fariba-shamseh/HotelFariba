@@ -121,7 +121,7 @@ const SignupForm = () => {
           {/* دکمه ثبت‌نام */}
           <button
             type="submit"
-            className="w-full py-2 sm:py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm sm:text-base flex items-center justify-center min-h-[48px] sm:min-h-[60px]"
+            className="w-full py-2 sm:py-3 bg-gradient-to-r from-[#7fc1cf] to-[#2c93a2] text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm sm:text-base flex items-center justify-center min-h-[48px] sm:min-h-[60px] rounded-lg hover:from-[#a3d5e0] hover:to-[#5ab0bf] transition-all duration-200"
             disabled={isLoading}
           >
             {!isLoading ? "ثبت‌نام" : <SpinnerMini />}
