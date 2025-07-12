@@ -87,9 +87,7 @@ const RoomTable = () => {
               <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
                 تخفیف
               </th>
-              <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold">
-                #
-              </th>
+              <th className="border border-gray-200 px-4 py-2 text-center text-sm font-semibold"></th>
             </tr>
           </thead>
           <tbody>

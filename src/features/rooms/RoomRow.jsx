@@ -52,14 +52,14 @@ const RoomRow = ({ room, index, openModal }) => {
       </td>
       <td className="border border-gray-200 px-4 py-2 text-gray-800">
         <div className="flex justify-center gap-2">
-          <button
-            className="text-blue-600 hover:text-blue-800 transition-colors"
-            title="کپی"
-            onClick={handleDuplicate}
-            disabled={isCreating}
-          >
-            <FiCopy size={18} />
-          </button>
+          {/*<button*/}
+          {/*  className="text-blue-600 hover:text-blue-800 transition-colors"*/}
+          {/*  title="کپی"*/}
+          {/*  onClick={handleDuplicate}*/}
+          {/*  disabled={isCreating}*/}
+          {/*>*/}
+          {/*  <FiCopy size={18} />*/}
+          {/*</button>*/}
           <button
             className="text-[#2c93a2] hover:text-green-800 transition-colors"
             title="ویرایش"

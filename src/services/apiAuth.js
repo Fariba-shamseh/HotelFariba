@@ -1,4 +1,5 @@
 import supabase, { supabaseUrl } from "./supabase.js";
+import { format } from "date-fns";
 
 export async function signup({ fullName, email, password }) {
   const { data, error } = await supabase.auth.signUp({
@@ -72,4 +73,33 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
 
   if (error2) throw new Error(error2.message);
   return updatedUser;
+}
+
+export async function getBookingsAfterDate(date) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("created_at,totalPrice,extrasPrice")
+    .gte("created_at", "2025-01-01T00:00:00.000Z") // بازه بزرگ
+    .lt("created_at", "2025-12-31T23:59:59.999Z");
+  if (error) {
+    console.error("error:", error);
+    throw new Error("Bookings could not be loaded");
+  }
+
+  return data;
+}
+
+export async function getStaysAfterDate(date) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("*,guests(fullName)")
+    .gte("startDate", date)
+    .lt("startDate", format.getToday());
+
+  if (error) {
+    console.error("error:", error);
+    throw new Error("Bookings could not be loaded");
+  }
+
+  return data;
 }

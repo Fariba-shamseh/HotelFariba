@@ -90,7 +90,7 @@ const UpdateUserDataForm = () => {
         <button
           type="submit"
           disabled={isUpdating}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="w-full py-2 sm:py-3 bg-gradient-to-r from-[#e74c3c] to-[#c0392b] text-white font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm sm:text-base flex items-center justify-center min-h-[48px] sm:min-h-[55px] rounded-lg hover:from-[#f19a8e] hover:to-[#e57366] transition-all duration-200"
         >
           Submit
         </button>

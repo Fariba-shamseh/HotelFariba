@@ -10,10 +10,30 @@ export async function getRooms() {
 
 //-------------------------------------------------------------------------------
 
+// export async function deleteRoom(id) {
+//   const { error } = await supabase.from("rooms").delete().eq("id", id);
+//   if (error) {
+//     throw new Error("حذف اتاق‌ها انجام نشد");
+//   }
+// }
 export async function deleteRoom(id) {
+  const { data: bookings, error: bookingsError } = await supabase
+    .from("bookings")
+    .select("id")
+    .eq("roomId", id);
+
+  if (bookingsError) {
+    throw new Error("خطا در بررسی رزروهای اتاق");
+  }
+
+  if (bookings.length > 0) {
+    throw new Error("این اتاق دارای رزرو فعال است و قابل حذف نیست");
+  }
+
+  // 2. اگر رزروی نبود، اقدام به حذف اتاق
   const { error } = await supabase.from("rooms").delete().eq("id", id);
   if (error) {
-    throw new Error("حذف اتاق‌ها انجام نشد");
+    throw new Error("حذف اتاق انجام نشد");
   }
 }
 
