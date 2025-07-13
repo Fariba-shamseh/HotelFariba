@@ -5,7 +5,7 @@ import { useSignup } from "./useSignup.js";
 import SpinnerMini from "../../ui/SpinnerMini.jsx";
 
 const SignupForm = () => {
-  const { signup, isLoading } = useSignup();
+  const { signup, isPending: isLoading } = useSignup();
   const {
     register,
     handleSubmit,

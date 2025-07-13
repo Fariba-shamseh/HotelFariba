@@ -3,7 +3,7 @@ import { getBookings } from "../../services/apiBookings.js";
 
 export function useBookings() {
   const {
-    isLoading,
+    isPending: isLoading,
     error,
     data: bookings,
   } = useQuery({

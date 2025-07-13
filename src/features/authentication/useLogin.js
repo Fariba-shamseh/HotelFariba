@@ -5,7 +5,7 @@ import { login as loginApi } from "../../services/apiAuth.js";
 
 export function useLogin() {
   const navigate = useNavigate();
-  const { mutate: login, isLoading } = useMutation({
+  const { mutate: login, isPending: isLoading } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
     onSuccess: () => {
       navigate("/dashboard", { replace: true });

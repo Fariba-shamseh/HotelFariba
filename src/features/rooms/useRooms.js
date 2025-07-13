@@ -3,7 +3,7 @@ import { getRooms } from "../../services/apiRooms.js";
 
 export function useRooms() {
   const {
-    isLoading,
+    isPending: isLoading,
     error,
     data: rooms,
   } = useQuery({

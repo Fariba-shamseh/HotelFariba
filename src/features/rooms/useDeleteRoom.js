@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 export function useDeleteRoom() {
   const queryClient = useQueryClient();
 
-  const { isLoading: isDeleting, mutate: deleteRoom } = useMutation({
+  const { isPending: isDeleting, mutate: deleteRoom } = useMutation({
     // mutationFn: (id) => deleteRoom(id),
     mutationFn: deleteRoomApi,
     onSuccess: () => {

@@ -3,7 +3,7 @@ import Spinner from "../../ui/Spinner.jsx";
 import { useRecentBookings } from "./useRecentBookings.jsx";
 
 const DashboardLayout = () => {
-  const { bookings, isLoading } = useRecentBookings();
+  const { bookings, isPending: isLoading } = useRecentBookings();
   if (isLoading) return <Spinner />;
   console.log(bookings);
 

@@ -8,6 +8,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin();
   console.log("isLoading:", isLoading);
+
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
@@ -21,7 +22,7 @@ const LoginForm = () => {
       },
     );
   }
-
+  console.log("LoginForm rendered");
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 md:px-8">
       <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-lg shadow-lg">
